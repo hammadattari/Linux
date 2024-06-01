@@ -118,6 +118,7 @@ Replace "my_partition" with the actual name of the partition.
 Run the command:
 ```
 sudo lvremove /dev/my_partition
+e.g. lvremove -an /dev/mapper/myvg-mylv
 ````
 Replace "my_partition" with the actual name of the partition.
 
