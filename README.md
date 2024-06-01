@@ -109,6 +109,7 @@ Note the name of the partition you want to delete (e.g., "my_partition").
 Run the command:
 ```
 sudo lvchange -an /dev/my_partition
+e.g. lvchange -an /dev/mapper/myvg-mylv
 ```
 Replace "my_partition" with the actual name of the partition.
 
@@ -125,6 +126,7 @@ Replace "my_partition" with the actual name of the partition.
 If the partition was part of a VG, you need to remove the VG as well. Run the command:
 ```
 sudo vgremove my_vg
+e.g. vgremove -an /dev/mapper/myvg-mylv
 ```
 Replace "my_vg" with the actual name of the VG.
 
