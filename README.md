@@ -127,7 +127,7 @@ Replace "my_partition" with the actual name of the partition.
 If the partition was part of a VG, you need to remove the VG as well. Run the command:
 ```
 sudo vgremove my_vg
-e.g. vgremove -an /dev/mapper/myvg-mylv
+e.g. vgremove myvg
 ```
 Replace "my_vg" with the actual name of the VG.
 
