@@ -107,7 +107,7 @@ lsblk
 df -h
 ```
 
-#### 2. Resize the filesystem:
+2. **Resize the Filesystem:**
 
 ```
 resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
