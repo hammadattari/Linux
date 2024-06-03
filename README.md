@@ -18,7 +18,7 @@ For example, Becoming an administrator of IT infrastructure and also important f
  - 8e (LVM partition type)
 4. ## Write changes:
   - w (make revisions)
-## When adding a new hard drive to an Ubuntu server, the best way to create partitions with LVM (Logical Volume Manager) is to follow these steps:
+## When adding a new hard drive to an Ubuntu server and creating LVM (Logical Volume Manager) on it, follow these steps:
 
 1. ### Install LVM:
     - sudo apt-get install lvm2 (if not already installed)
