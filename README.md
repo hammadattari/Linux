@@ -32,7 +32,7 @@ For example, Becoming an administrator of IT infrastructure and also important f
 5. ### Format and mount the LV:
     - sudo mkfs.ext4 /dev/myvg/mylv
     - sudo mount /dev/myvg/mylv /mnt
-6. ### Add the LV to the fstabe for persistent mount:
+6. ### Add the LV to the /etc/fstab for persistent mount:
     - sudo lsblk -o +UUID (get the UUID of the LV)
     - sudo UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\t/mnt/data\text4\tdefaults\t0\t0 (\t means press a tab)
     - e.g. UUID=30dbec69-b3d0-4ac3-9619-cf4a534bca09       /mnt    ext4    defaults        0       0
