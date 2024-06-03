@@ -56,10 +56,6 @@ For example, Becoming an administrator of IT infrastructure and also important f
 9. **Verify Resize (Optional):**  (Optional step) Confirm that the size of your root partition has increased.
 
 
-
-
-**Extending Root Partition with LVM**
-
 **Verify Partition on New Disk**
 
 ```
