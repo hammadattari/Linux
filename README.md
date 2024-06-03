@@ -41,42 +41,93 @@ For example, Becoming an administrator of IT infrastructure and also important f
     - ls -al /mnt (files are shown)
 
 ![carbon (8)](https://github.com/hammadattari/Linux/assets/44769452/d2a6082a-d47e-43a3-ba94-2048a80e07e7)
+## Extending Root Partition with LVM
 
-## Increasing Storage Space in an Existing LVM 
+### Table of Contents
 
-This guide outlines the steps to increase storage space in your existing LVM (Logical Volume Manager) setup. Remember to replace all names and paths with your specific configuration.  **Caution!** Incorrect commands can lead to data loss or corruption. If unsure, consult an expert or refer to your Linux distribution's LVM documentation.
+1. **Verify Partition on New Disk (/dev/sdd):**  This step checks for the newly created partition.
+2. **Create Physical Volume (PV):**  This command creates a PV using the partition.
+3. **Extend Volume Group (VG):**  This step expands the VG to include the new PV.
+4. **Identify Root Logical Volume (LV):**  Locate your root LV for resizing.
+5. **Resize the Logical Volume (LV):**  This command extends the LV using available free space.
+6. **Verify Available Space (Optional):**  (Optional step) Check if unallocated space is visible within the partition.
+7. **Identify Filesystem Type:**  Determine the filesystem type of your root partition (e.g., ext4, xfs).
+8. **Resize the Filesystem:**  Use the appropriate command (ext4: `resize2fs`, xfs: `xfs_growfs`) to resize the filesystem and utilize the extended space.
+9. **Verify Resize (Optional):**  (Optional step) Confirm that the size of your root partition has increased.
 
-### Prerequisites
 
-* Existing LVM setup with free space available on a physical volume.
-* New storage device (e.g., hard drive or SSD) attached to the system.
-* Root access or ability to run `sudo` commands.
 
-### Steps
 
-1. **Check Current Configuration:**
-   - Run `sudo lvm display` or `sudo lvmdiskscan` to view the current LVM layout and free space.
-   - Identify the Volume Group (VG) name, Logical Volume (LV) name, and the new Physical Volume (PV) path (/dev/newdevice).
+**Extending Root Partition with LVM**
 
-2. **Add a New Physical Volume:**
-   - Run `sudo pvcreate /dev/newdevice` to create a physical volume from the new storage device.
-   - Verify the new PV with `sudo pvs` or `sudo pvdisplay`.
+**Verify Partition on New Disk**
 
-3. **Extend the Volume Group:**
-   - Run `sudo vgextend VolGroup /dev/newdevice` to extend the Volume Group (replace `VolGroup` with your actual VG name).
-   - Verify the extension with `sudo vgs` or `sudo vgdisplay`.
+```
+fdisk -l /dev/sdd
 
-4. **Extend the Logical Volume:**
-   - Run `sudo lvextend -l +100%FREE /dev/VolGroup/LogicalVol` to extend the Logical Volume (replace `VolGroup` and `LogicalVol` with your actual names).
-   - Verify the extension with `sudo lvs` or `sudo lvdisplay`.
+# Note the whole disk 5GB partitioned with name: /dev/sdd1
+```
 
-5. **Resize the File System:**
-   - For ext2, ext3, or ext4 file systems: `sudo resize2fs /dev/VolGroup/LogicalVol`
-   - For XFS file system: `sudo xfs_growfs /dev/VolGroup/LogicalVol`
+**Create Physical Volume (PV)**
 
-6. **Verify the Changes:**
-   - Run `df -h` to confirm the increased storage space.
-   - Run `sudo lvm display` to verify the updated LVM configuration.
+```
+pvcreate /dev/sdd1
+```
+
+**Extend Volume Group (VG)**
+
+Add the new physical volume to the existing volume group  :
+
+```
+vgextend <your_vg_name> /dev/sdd1
+
+# Example: ubuntu-vg is root volum group
+vgextend ubuntu-vg /dev/sdd1
+```
+
+**Identify Logical Volume (LV)**
+
+List all logical volumes and locate the root LV:
+
+```
+lvdisplay
+```
+
+**Resize Logical Volume (LV)**
+
+* Copy the path to the LV you want to extend (e.g., /dev/ubuntu-vg/ubuntu-lv)
+* Extend the logical volume:
+
+```
+lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+```
+
+**Resize Filesystem**
+
+1. Check the disk usage:
+
+```
+lsblk
+df -h
+```
+
+#### 2. Resize the filesystem:
+
+```
+resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+```
+
+3. Verify the updated disk usage:
+
+```
+df -h
+
+# Example output:
+
+# Note: The available space has increased from 24GB to 29GB.
+```
+
+
 
 
 # Only 9 commands to LVM Remove form Physical Partition
