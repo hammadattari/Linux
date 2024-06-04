@@ -95,7 +95,9 @@ lvdisplay
 * Extend the logical volume:
 
 ```
-lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv or
+lvextend -L +5G /dev/mapper/ubuntu--vg-ubuntu--lv
+
 ```
 
 **Resize Filesystem**
